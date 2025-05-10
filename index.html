@@ -18,15 +18,23 @@
     async function login() {
       const email = document.getElementById('email').value;
       const senha = document.getElementById('senha').value;
-      const dados = await fetch(`${BASE_URL}?sheet=usuarios`).then(r => r.json());
 
-      const user = dados.find(u => u.Usuario === email && u.Senha === senha);
+      try {
+        const response = await fetch(`<span class="math-inline">\{BASE\_URL\}?sheet\=usuarios&action\=login&email\=</span>{email}&senha=${senha}`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const dados = await response.json();
 
-      if (user) {
-        localStorage.setItem('usuario', JSON.stringify(user));
-        window.location.href = 'dashboard.html';
-      } else {
-        alert("Usuário ou senha inválidos!");
+        if (dados.sucesso) {
+          localStorage.setItem('usuario', JSON.stringify(dados.usuario));
+          window.location.href = 'dashboard.html';
+        } else {
+          alert(dados.erro || "Usuário ou senha inválidos!");
+        }
+      } catch (error) {
+        console.error("Erro ao fazer login:", error);
+        alert("Erro ao fazer login. Por favor, tente novamente.");
       }
     }
   </script>

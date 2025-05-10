@@ -21,7 +21,7 @@
   </form>
 
   <script>
-    const BASE_URL = 'https://script.google.com/macros/s/AKfycbxjrG9cJYZdUfHBrupfyr5b-6Xs4A-O_Kds7g_rx0gZOr3ECwhsc1oaGb6a60-4Dz-9/exec';
+    const BASE_URL = 'SUA_NOVA_URL_DO_APPS_SCRIPT'; // Substitua pela URL real
 
     const user = JSON.parse(localStorage.getItem('usuario'));
     if (!user || user.Tipo !== 'admin') {
@@ -30,13 +30,22 @@
     }
 
     async function carregarTecnicos() {
-      const tecnicos = await fetch(`${BASE_URL}?sheet=tecnicos`).then(r => r.json());
-      const select = document.getElementById('executado');
-      tecnicos.forEach(t => {
-        const option = document.createElement('option');
-        option.value = option.textContent = t.Nome;
-        select.appendChild(option);
-      });
+      try {
+        const response = await fetch(`${BASE_URL}?sheet=tecnicos`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const tecnicos = await response.json();
+        const select = document.getElementById('executado');
+        tecnicos.forEach(t => {
+          const option = document.createElement('option');
+          option.value = option.textContent = t.Nome;
+          select.appendChild(option);
+        });
+      } catch (error) {
+        console.error("Erro ao carregar técnicos:", error);
+        alert("Erro ao carregar técnicos. Por favor, tente novamente.");
+      }
     }
 
     document.getElementById('form-chamado').addEventListener('submit', async (e) => {
@@ -50,18 +59,25 @@
         data: document.getElementById('data').value            // Vai para "Data"
       };
 
-      const resposta = await fetch(`${BASE_URL}`, {
-        method: "POST",
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(dados)
-      });
-
-      const resp = await resposta.json();
-      if (resp.sucesso) {
-        alert("Chamado criado com sucesso!");
-        document.getElementById('form-chamado').reset();
-      } else {
-        alert("Erro ao criar chamado: " + JSON.stringify(resp));
+      try {
+        const response = await fetch(`${BASE_URL}`, {
+          method: "POST",
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(dados)
+        });
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const resp = await response.json();
+        if (resp.sucesso) {
+          alert("Chamado criado com sucesso!");
+          document.getElementById('form-chamado').reset();
+        } else {
+          alert(resp.erro || "Erro ao criar chamado.");
+        }
+      } catch (error) {
+        console.error("Erro ao criar chamado:", error);
+        alert("Erro ao criar chamado. Por favor, tente novamente.");
       }
     });
 

@@ -34,8 +34,17 @@
     let chamados = [];
 
     async function carregarChamados() {
-      chamados = await fetch(`${BASE_URL}?sheet=chamados`).then(r => r.json());
-      exibirChamados(chamados);
+      try {
+        const response = await fetch(`${BASE_URL}?sheet=chamados`);
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        chamados = await response.json();
+        exibirChamados(chamados);
+      } catch (error) {
+        console.error("Erro ao carregar chamados:", error);
+        alert("Erro ao carregar chamados. Por favor, tente novamente.");
+      }
     }
 
     function exibirChamados(lista) {
@@ -44,12 +53,12 @@
       lista.forEach(ch => {
         tbody.innerHTML += `
           <tr>
-            <td>${ch.Codigo}</td>
-            <td>${ch["Descricao do Servico"]}</td>
-            <td>${ch.Status}</td>
-            <td>${ch.Polo}</td>
-            <td>${ch["Executado por"]}</td>
-            <td>${ch.Data}</td>
+            <td><span class="math-inline">\{ch\.Codigo\}</td\>
+<td\></span>{ch["Descricao do Servico"]}</td>
+            <td><span class="math-inline">\{ch\.Status\}</td\>
+<td\></span>{ch.Polo}</td>
+            <td><span class="math-inline">\{ch\["Executado por"\]\}</td\>
+<td\></span>{ch.Data}</td>
           </tr>
         `;
 
@@ -60,7 +69,7 @@
       const cidade = document.getElementById('filtro-cidade').value.toLowerCase();
       const status = document.getElementById('filtro-status').value.toLowerCase();
       const filtrados = chamados.filter(ch =>
-        ch.Cidade.toLowerCase().includes(cidade) &&
+        ch.Polo.toLowerCase().includes(cidade) &&
         ch.Status.toLowerCase().includes(status)
       );
       exibirChamados(filtrados);
