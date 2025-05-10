@@ -310,8 +310,12 @@ function aplicarFiltros() {
   const status = document.getElementById('filter-status').value;
   const polo = document.getElementById('filter-polo').value;
   const prioridade = document.getElementById('filter-prioridade').value;
-  const dataInicio = document.getElementById('filter-data-inicio').value;
-  const dataFim = document.getElementById('filter-data-fim').value;
+  const inputInicio = document.getElementById('filter-data-inicio');
+const inputFim = document.getElementById('filter-data-fim');
+
+const dataInicio = inputInicio ? inputInicio.value : null;
+const dataFim = inputFim ? inputFim.value : null;
+
 
   // Filtra os dados
   chamadosFiltrados = chamadosData.filter(chamado => {
@@ -400,8 +404,13 @@ function resetarFiltros() {
   document.getElementById('filter-status').value = '';
   document.getElementById('filter-polo').value = '';
   document.getElementById('filter-prioridade').value = '';
+  if (document.getElementById('filter-data-inicio')) {
   document.getElementById('filter-data-inicio').value = '';
+}
+if (document.getElementById('filter-data-fim')) {
   document.getElementById('filter-data-fim').value = '';
+}
+
   document.getElementById('search-input').value = '';
 
   // Restaura todos os dados
