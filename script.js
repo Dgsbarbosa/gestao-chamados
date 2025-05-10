@@ -252,6 +252,7 @@ function renderizarTabela() {
       const td = document.createElement('td');
       const valor = chamado[coluna] || '';
 
+      
       // Formata células especiais
       if (coluna === 'status') {
         const statusNormalizado = valor.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // remove acentos
