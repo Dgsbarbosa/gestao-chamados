@@ -1,0 +1,1 @@
+const BASE_URL = 'https://script.google.com/macros/s/AKfycbyyeAJaHcSP_H6fqEuO__aV9GHNlMWvi3s6RKqbnCCrn1SlZ8ti-ZePnJw5cThw9WZE/exec';

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <title>Chamados</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <h1>Lista de Chamados</h1>
+
+  <div class="filtros">
+    <input id="filtro-cidade" placeholder="Filtrar por cidade" oninput="filtrarChamados()">
+    <input id="filtro-status" placeholder="Filtrar por status" oninput="filtrarChamados()">
+  </div>
+
+  <table id="tabela-chamados">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Título</th>
+        <th>Status</th>
+        <th>Cidade</th>
+        <th>Executado por</th>
+        <th>Data</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+
+  <script src="script.js"></script>
+  <script>
+    let chamados = [];
+
+    async function carregarChamados() {
+      chamados = await fetch(`${BASE_URL}?sheet=chamados`).then(r => r.json());
+      exibirChamados(chamados);
+    }
+
+    function exibirChamados(lista) {
+      const tbody = document.querySelector('tbody');
+      tbody.innerHTML = '';
+      lista.forEach(ch => {
+        tbody.innerHTML += `
+          <tr>
+            <td>${ch.Codigo}</td>
+            <td>${ch["Descricao do Servico"]}</td>
+            <td>${ch.Status}</td>
+            <td>${ch.Polo}</td>
+            <td>${ch["Executado por"]}</td>
+            <td>${ch.Data}</td>
+          </tr>
+        `;
+
+      });
+    }
+
+    function filtrarChamados() {
+      const cidade = document.getElementById('filtro-cidade').value.toLowerCase();
+      const status = document.getElementById('filtro-status').value.toLowerCase();
+      const filtrados = chamados.filter(ch =>
+        ch.Cidade.toLowerCase().includes(cidade) &&
+        ch.Status.toLowerCase().includes(status)
+      );
+      exibirChamados(filtrados);
+    }
+
+    carregarChamados();
+  </script>
+</body>
+
+</html>
