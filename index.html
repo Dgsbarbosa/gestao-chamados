@@ -20,7 +20,7 @@
       const senha = document.getElementById('senha').value;
 
       try {
-        const response = await fetch(`<span class="math-inline">\{BASE\_URL\}?sheet\=usuarios&action\=login&email\=</span>{email}&senha=${senha}`);
+        const response = await fetch(`${BASE_URL}?sheet=usuarios&action=login&email=${email}&senha=${senha}`);
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
