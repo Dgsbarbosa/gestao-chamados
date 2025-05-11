@@ -685,8 +685,8 @@ td {
 }
 
 .status-em-andamento {
-  background-color: #e5ff00;
-  color: #fff8e1;
+  background-color: #FFD700;
+  color: #353535;
 }
 .status-aguardando-material{
   background-color: #fff8e1;
