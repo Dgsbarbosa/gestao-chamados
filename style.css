@@ -717,12 +717,12 @@ th.descricao {
   color: #388e3c;
 }
 
-.prioridade-media {
+.prioridade-regular {
   background-color: #fff8e1;
   color: #ff8f00;
 }
 
-.prioridade-alta {
+.prioridade-urgência {
   background-color: #ffebee;
   color: #d32f2f;
 }
