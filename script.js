@@ -256,6 +256,8 @@ function renderizarTabela() {
       // Formata células especiais
       if (coluna === 'status') {
         const statusNormalizado = valor.normalize("NFD").replace(/[\u0300-\u036f]/g, ""); // remove acentos
+
+        // alert(statusNormalizado)
         const statusClass = `status status-${statusNormalizado.toLowerCase().replace(/\s+/g, '-')}`;
 
         td.innerHTML = `<span class="${statusClass}">${valor}</span>`;

@@ -678,13 +678,17 @@ td {
 
 .status-na-fila,
 .status-aberto {
-  background-color: #e3f2fd;
+  background-color: #e3f2fd ;
   color: #1976d2;
 }
 
 .status-em-andamento {
+  background-color: #e5ff00;
+  color: #fff8e1;
+}
+.status-aguardando-material{
   background-color: #fff8e1;
-  color: #ff8f00;
+  color: #fa8e00;
 }
 .status {
   text-transform: uppercase;
