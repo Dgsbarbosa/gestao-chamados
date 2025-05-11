@@ -74,7 +74,7 @@ async function login() {
     senhaAtual = senha;     // a senha original
     nomeUsuario = data.nome || usuario; // nome completo do usuário (opcional)
     // Atualiza a interface
-    document.getElementById('user-name').textContent = usuarioAtual;
+    document.getElementById('user-name').textContent = nomeUsuario;
     document.getElementById('admin-badge').style.display = isAdmin ? 'inline-flex' : 'none';
 
     // Mostra a aplicação principal e esconde o login
